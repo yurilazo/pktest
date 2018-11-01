@@ -1,0 +1,181 @@
+<meta charset="utf-8" />
+<body>
+	<form id="batalla">
+		<input type="text" name="atacante">
+		<input type="text" name="receptor">
+		<input type="submit" name="ataque!" value="ataque!">
+	</form>
+	<br/><br/>
+	<button id="consultor">Consultar!</button>
+	<div id="messaje"></div>
+</body>
+<script type="text/javascript">
+	var resistencia = {
+			'Acero':
+			{
+				'Acero':0.5,'Agua':1,'Bicho':1,'Dragón':0.5,'Eléctrico':1,'Fantasma':0.5,'Fuego':2,'Hielo':0.5,'Lucha':2,'Normal':0.5,'Planta':0.5,'Psíquico':0.5,'Roca':0.5,'Siniestro':0.5,'Tierra':2,'Veneno':0,'Volador':0.5
+			},
+			'Agua':
+			{
+				'Acero':0.5,'Agua':0.5,'Bicho':1,'Dragón':1,'Eléctrico':2,'Fantasma':1,'Fuego':0.5,'Hielo':0.5,'Lucha':1,'Normal':1,'Planta':2,'Psíquico':1,'Roca':1,'Siniestro':1,'Tierra':1,'Veneno':1,'Volador':1
+			},
+			'Bicho':
+			{
+				'Acero':1,'Agua':1,'Bicho':1,'Dragón':1,'Eléctrico':1,'Fantasma':1,'Fuego':2,'Hielo':1,'Lucha':0.5,'Normal':1,'Planta':2,'Psíquico':1,'Roca':2,'Siniestro':1,'Tierra':0.5,'Veneno':1,'Volador':2
+			},
+			'Dragón':
+			{
+				'Acero':1,'Agua':0.5,'Bicho':1,'Dragón':2,'Eléctrico':0.5,'Fantasma':1,'Fuego':0.5,'Hielo':2,'Lucha':1,'Normal':1,'Planta':0.5,'Psíquico':1,'Roca':1,'Siniestro':1,'Tierra':1,'Veneno':1,'Volador':1
+			},
+			'Eléctrico':
+			{
+				'Acero':0.5,'Agua':1,'Bicho':1,'Dragón':1,'Eléctrico':0.5,'Fantasma':1,'Fuego':1,'Hielo':1,'Lucha':1,'Normal':1,'Planta':1,'Psíquico':1,'Roca':1,'Siniestro':1,'Tierra':2,'Veneno':1,'Volador':0.5
+			},
+			'Fantasma':
+			{
+				'Acero':1,'Agua':1,'Bicho':0.5,'Dragón':1,'Eléctrico':1,'Fantasma':2,'Fuego':1,'Hielo':1,'Lucha':0,'Normal':0,'Planta':1,'Psíquico':1,'Roca':1,'Siniestro':2,'Tierra':1,'Veneno':0.5,'Volador':1
+			},
+			'Fuego':
+			{
+				'Acero':0.5,'Agua':2,'Bicho':0.5,'Dragón':1,'Eléctrico':1,'Fantasma':1,'Fuego':0.5,'Hielo':0.5,'Lucha':1,'Normal':1,'Planta':0.5,'Psíquico':1,'Roca':2,'Siniestro':1,'Tierra':2,'Veneno':1,'Volador':1
+			},
+			'Hielo':
+			{
+				'Acero':2,'Agua':1,'Bicho':1,'Dragón':1,'Eléctrico':1,'Fantasma':1,'Fuego':2,'Hielo':0.5,'Lucha':2,'Normal':1,'Planta':1,'Psíquico':1,'Roca':2,'Siniestro':1,'Tierra':1,'Veneno':1,'Volador':1
+			},
+			'Lucha':
+			{
+				'Acero':1,'Agua':1,'Bicho':0.5,'Dragón':1,'Eléctrico':1,'Fantasma':1,'Fuego':1,'Hielo':1,'Lucha':1,'Normal':1,'Planta':1,'Psíquico':2,'Roca':0.5,'Siniestro':0.5,'Tierra':1,'Veneno':1,'Volador':2
+			},
+			'Normal':
+			{
+				'Acero':1,'Agua':1,'Bicho':1,'Dragón':1,'Eléctrico':1,'Fantasma':0,'Fuego':1,'Hielo':1,'Lucha':2,'Normal':1,'Planta':1,'Psíquico':1,'Roca':1,'Siniestro':1,'Tierra':1,'Veneno':1,'Volador':1
+			},
+			'Planta':
+			{
+				'Acero':1,'Agua':0.5,'Bicho':2,'Dragón':1,'Eléctrico':0.5,'Fantasma':1,'Fuego':2,'Hielo':2,'Lucha':1,'Normal':1,'Planta':1,'Psíquico':2,'Roca':1,'Siniestro':1,'Tierra':0.5,'Veneno':2,'Volador':2
+			},
+			'Psíquico':
+			{
+				'Acero':1,'Agua':1,'Bicho':2,'Dragón':1,'Eléctrico':1,'Fantasma':2,'Fuego':1,'Hielo':1,'Lucha':0.5,'Normal':1,'Planta':1,'Psíquico':0.5,'Roca':1,'Siniestro':2,'Tierra':1,'Veneno':1,'Volador':1
+			},
+			'Roca':
+			{
+				'Acero':2,'Agua':2,'Bicho':1,'Dragón':1,'Eléctrico':1,'Fantasma':1,'Fuego':0.5,'Hielo':1,'Lucha':2,'Normal':0.5,'Planta':2,'Psíquico':1,'Roca':1,'Siniestro':1,'Tierra':2,'Veneno':0.5,'Volador':0.5
+			},
+			'Siniestro':
+			{
+				'Acero':1,'Agua':1,'Bicho':2,'Dragón':1,'Eléctrico':1,'Fantasma':0.5,'Fuego':1,'Hielo':1,'Lucha':2,'Normal':1,'Planta':1,'Psíquico':0,'Roca':1,'Siniestro':0.5,'Tierra':1,'Veneno':1,'Volador':1
+			},
+			'Tierra':
+			{
+				'Acero':1,'Agua':2,'Bicho':1,'Dragón':1,'Eléctrico':0,'Fantasma':1,'Fuego':1,'Hielo':2,'Lucha':1,'Normal':1,'Planta':2,'Psíquico':1,'Roca':0.5,'Siniestro':1,'Tierra':1,'Veneno':0.5,'Volador':1
+			},
+			'Veneno':
+			{
+				'Acero':1,'Agua':1,'Bicho':0.5,'Dragón':1,'Eléctrico':1,'Fantasma':1,'Fuego':1,'Hielo':1,'Lucha':0.5,'Normal':1,'Planta':0.5,'Psíquico':2,'Roca':1,'Siniestro':1,'Tierra':2,'Veneno':0.5,'Volador':1
+			},
+			'Volador':
+			{
+				'Acero':1,'Agua':1,'Bicho':0.5,'Dragón':1,'Eléctrico':2,'Fantasma':1,'Fuego':1,'Hielo':2,'Lucha':0.5,'Normal':1,'Planta':0.5,'Psíquico':1,'Roca':2,'Siniestro':1,'Tierra':0,'Veneno':1,'Volador':1
+			}
+		};
+
+	var batalla = document.getElementById("batalla");
+	var consultor = document.getElementById("consultor");
+
+	batalla.addEventListener("submit", function(event) {
+		event.preventDefault();
+		var receptor = document.getElementsByName('receptor')[0].value;
+		var atacante = document.getElementsByName('atacante')[0].value;
+		var mensajeEfectividad = {'0':'no tiene efecto','0.5':'es poco efectivo','1':'tiene un efecto normal','2':'es muy efectivo'}
+		alert('Un ataque tipo '+atacante+' atacó a un pokemon tipo '+receptor+' el ataque '+mensajeEfectividad[String(resistencia[receptor][atacante])]);
+	});
+
+	consultor.addEventListener("click", function(event) {
+		event.preventDefault();
+
+		var receptorMasResistente = '';
+		var puntosMenorRecepcion = 100;
+		for (var receptor in resistencia) {
+			var puntosdeEfectividad = 0;
+			if (receptor != 'Acero' && receptor != 'Fantasma') {
+				for (var atacante in resistencia[receptor]) {
+					puntosdeEfectividad += resistencia[receptor][atacante];
+				}
+				if (puntosdeEfectividad < puntosMenorRecepcion) {
+					puntosMenorRecepcion = puntosdeEfectividad;
+					receptorMasResistente = receptor;
+				};
+			}
+		}
+		alert(receptorMasResistente+' es el tipo más resistente con '+String(puntosMenorRecepcion)+' puntos');
+	});
+
+	var mapa = {
+		9 : {
+			9:0.5,11:1,7:1,16:0.5,13:1,8:0.5,10:2,15:0.5,2:2,1:0.5,12:0.5,14:0.5,6:0.5,17:0.5,5:2,4:0,3:0.5
+		},
+		11 : {
+			9:0.5,11:0.5,7:1,16:1,13:2,8:1,10:0.5,15:0.5,2:1,1:1,12:2,14:1,6:1,17:1,5:1,4:1,3:1
+		},
+		7 : {
+			9:1,11:1,7:1,16:1,13:1,8:1,10:2,15:1,2:0.5,1:1,12:2,14:1,6:2,17:1,5:0.5,4:1,3:2
+		},
+		16 : {
+			9:1,11:0.5,7:1,16:2,13:0.5,8:1,10:0.5,15:2,2:1,1:1,12:0.5,14:1,6:1,17:1,5:1,4:1,3:1
+		},
+		13 : {
+			9:0.5,11:1,7:1,16:1,13:0.5,8:1,10:1,15:1,2:1,1:1,12:1,14:1,6:1,17:1,5:2,4:1,3:0.5
+		},
+		8 : {
+			9:1,11:1,7:0.5,16:1,13:1,8:2,10:1,15:1,2:0,1:0,12:1,14:1,6:1,17:2,5:1,4:0.5,3:1
+		},
+		10 : {
+			9:0.5,11:2,7:0.5,16:1,13:1,8:1,10:0.5,15:0.5,2:1,1:1,12:0.5,14:1,6:2,17:1,5:2,4:1,3:1
+		},
+		15 : {
+			9:2,11:1,7:1,16:1,13:1,8:1,10:2,15:0.5,2:2,1:1,12:1,14:1,6:2,17:1,5:1,4:1,3:1
+		},
+		2 : {
+			9:1,11:1,7:0.5,16:1,13:1,8:1,10:1,15:1,2:1,1:1,12:1,14:2,6:0.5,17:0.5,5:1,4:1,3:2
+		},
+		1 : {
+			9:1,11:1,7:1,16:1,13:1,8:0,10:1,15:1,2:2,1:1,12:1,14:1,6:1,17:1,5:1,4:1,3:1
+		},
+		12 : {
+			9:1,11:0.5,7:2,16:1,13:0.5,8:1,10:2,15:2,2:1,1:1,12:1,14:2,6:1,17:1,5:0.5,4:2,3:2
+		},
+		14 : {
+			9:1,11:1,7:2,16:1,13:1,8:2,10:1,15:1,2:0.5,1:1,12:1,14:0.5,6:1,17:2,5:1,4:1,3:1
+		},
+		6 : {
+			9:2,11:2,7:1,16:1,13:1,8:1,10:0.5,15:1,2:2,1:0.5,12:2,14:1,6:1,17:1,5:2,4:0.5,3:0.5
+		},
+		17 : {
+			9:1,11:1,7:2,16:1,13:1,8:0.5,10:1,15:1,2:2,1:1,12:1,14:0,6:1,17:0.5,5:1,4:1,3:1
+		},
+		5 : {
+			9:1,11:2,7:1,16:1,13:0,8:1,10:1,15:2,2:1,1:1,12:2,14:1,6:0.5,17:1,5:1,4:0.5,3:1
+		},
+		4 : {
+			9:1,11:1,7:0.5,16:1,13:1,8:1,10:1,15:1,2:0.5,1:1,12:0.5,14:2,6:1,17:1,5:2,4:0.5,3:1
+		},
+		3 : {
+			9:1,11:1,7:0.5,16:1,13:2,8:1,10:1,15:2,2:0.5,1:1,12:0.5,14:1,6:2,17:1,5:0,4:1,3:1
+		}
+	}
+	function crearInsert() {
+
+		var insert = "";
+		for (var receptor in mapa) {
+			for (var atacante in mapa[receptor]) {
+				insert += "INSERT INTO `effectiveness`(`id_effectiveness`, `id_type_attacker`, `id_type_defender`, `id_chart`, `multiplier`) VALUES (NULL,"+atacante+","+receptor+",2,"+mapa[receptor][atacante]+");<br/>";
+			}
+		}
+		return insert;
+	};
+
+	//document.getElementById('messaje').innerHTML = crearInsert();
+
+</script>
